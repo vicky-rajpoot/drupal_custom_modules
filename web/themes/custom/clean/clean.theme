@@ -1,0 +1,105 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the Bootstrap Barrio theme.
+ */
+
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\Xss;
+use Drupal\node\Entity\Node;
+use Drupal\Component\Render\MarkupInterface;
+use Drupal\Core\Render\Element;
+use Drupal\views\Plugin\Derivative\ViewsLocalTask;
+use Drupal\views\ViewExecutable;
+use Drupal\views\Entity\View;
+use Drupal\views\Render\ViewsRenderPipelineMarkup;
+use Drupal\views\Views;
+
+
+
+function str($str){
+
+
+    $ret = str_replace(" ","_",$str);
+    
+    return $ret;
+}
+
+
+function clean_preprocess_commerce_add_to_cart_link_alter(&$array ,&$variables) {
+  // \Drupal::logger('my_module')->notice($variables);
+	$variables['content']['links']['#attributes']['class'][] = 'primary-btn';
+}
+
+function clean_preprocess_commerce_add_to_cart_link(&$variables) {
+
+  // Check the image style.
+  if ($variables['theme_hook_original'] == 'commerce_add_to_cart_link') {
+
+    // Set class.
+
+    $variables['attributes']['class'][] = 'Primary-btn';
+  }
+}
+
+function clean_preprocess_block(&$variables) {
+  // make the result count available as a variable for a certain content type
+   
+    $view = Views::getView('products_views1');
+    $view->setDisplay('default');
+    // contextual relationship filter
+    // $view->setArguments([$variables['node']->id()]);
+    $view->execute();
+
+    $variables['myvar'] = count($view->result);
+    $variables['related_news'] = $view->render();
+    // dd($count);
+  
+}
+
+
+
+
+function clean_theme_suggestions_alter(array &$suggestions,array &$variables,$hook){
+	if($hook=='fieldset'){
+		// dd($variables);
+	 if($variables["element"]["#title"] == "Returning Customer" ){
+            $suggestions[] = $hook.'__' . str($variables["element"]["#title"]);
+        }
+	
+	if($variables["element"]["#title"] == "New Customer" ){
+            $suggestions[] = $hook.'__' . str($variables["element"]["#title"]);
+        }
+	}
+}
+
+// function clean_preprocess_views_views_view__product_filter_cat__block_1(&$variables){
+// 	$variables['my_var'];
+// }
+
+// function clean_preprocess_page(&$variables, $hook){
+// 	$view = Views::getView('products_views1');
+// 	$view->build($display_id);
+// 	$view->query->limit = 0;
+// 	$view->execute();
+// 	$results = $view->result;
+// 	dd($results);
+// }
+
+
+// function clean_preprocess(&$variables, $hook){
+// 	dd($variables);
+// }
+// $view = views_get_view(‘example_view’);
+// $view->build($display_id);
+// $view->query->limit = 0;
+// $view->execute();
+// $results = $view->result;
+ // $variables['myvar'] = count($view->result);
+
+ // {{ myvar }}

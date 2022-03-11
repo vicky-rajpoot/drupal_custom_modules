@@ -1,0 +1,4 @@
+name: Custom Twig Extention 1
+description: This is my first Twig Extention
+type: module
+core_version_requirement: ^8 || ^9 

@@ -1,0 +1,99 @@
+{#
+/**
+ * @file
+ *
+ * Default product template.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapper.
+ * - product: The rendered product fields.
+ *   Use 'product' to print them all, or print a subset such as
+ *   'product.title'. Use the following code to exclude the
+ *   printing of a given field:
+ *   @code
+ *   {{ product|without('title') }}
+ *   @endcode
+ * - product_entity: The product entity.
+ * - product_url: The product URL.
+ *
+ * @ingroup themeable
+ */
+#}
+{{ include('block--advertisement.html.twig', {foo:   product.field_title })}}
+<article{{ attributes }}>
+  <section class="product-detail-cart">
+      <div class="container">
+         <div class="row">
+            <div class="col-12">
+               <!-- breadcrumb reagion -->
+            </div>
+            <div class="col-lg-5 col-md-5 col-12">
+               <div class="showcase-wrapper">
+                  <ul class="thumb-img">
+                  	{% for key,value in product.field_image if key|first != '#' %}
+                  		<li>
+                  		  <a>
+  						{{ product.field_image[key] }}
+  						  </a>
+  						</li>
+					{% endfor %}
+                  </ul>
+                  <div class="thumb-previewer">
+                  	
+                     {{ product.field_image[0] }}
+                 
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-12">
+               <div class="cart-content">
+                  <h4>{{ product.field_title }}</h4>
+                  <p>{{ product.body }}</p>
+                  <div class="btns-block">
+                     {{ product.add_to_cart_link }}
+                     <a href="#" class="showmore-btn">CONTACT FOR BULK ORDER</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section class="product-detail-description-sec">
+      <div class="container">
+         <div class="row">
+            <div class="col-12">
+               <div class="content-block">
+                  {{ product.field_description }}
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</article>
+
+
+
+ <!-- <div class="col-lg-5 col-md-5 col-12">
+	   <div class="showcase-wrapper">
+	      <ul class="thumb-img">
+	         <li>
+	            <a href="{{ file_url(product_entity.field_proimages.0.entity.uri.value) }}">
+	              <img src="{{ file_url(product_entity.field_proimages.0.entity.uri.value) }}" alt="thumb-img" width="48" height="48">
+
+	            </a>
+	         </li>
+	         <li>
+	            <a href="{{ file_url(product_entity.field_proimages.1.entity.uri.value) }}">
+	              <img src="{{ file_url(product_entity.field_proimages.1.entity.uri.value) }}"  alt="thumb-img" width="48" height="48">
+	            </a>
+	         </li>
+	      </ul>
+	      <div class="thumb-previewer">
+	        <img src="{{ file_url(product_entity.field_proimages.0.entity.uri.value) }}" alt="images" class="img-fluid" width="406" height="406">
+	       
+	      </div>
+	   </div>
+ </div> -->
+
+
+ 

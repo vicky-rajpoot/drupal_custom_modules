@@ -1,0 +1,16 @@
+name: Entity Bulk Clone
+type: module
+description: 'Entity Bulk clone via Action plugin.'
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: Clone
+
+dependencies:
+  - replicate:replicate
+  - entity:entity
+  - drupal:system (>=8.6)
+
+# Information added by Drupal.org packaging script on 2020-02-20
+version: '8.x-1.7'
+project: 'entity_bulk_clone'
+datestamp: 1582192718

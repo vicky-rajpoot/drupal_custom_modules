@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_bulk_clone
+    - entity
+id: bulk_clone_product_action
+label: 'Bulk Clone'
+type: commerce_product
+plugin: "bulk_clone_product_action"
+configuration: {  }

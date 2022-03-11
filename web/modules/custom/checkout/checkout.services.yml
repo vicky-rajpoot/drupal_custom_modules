@@ -1,0 +1,6 @@
+services:
+  checkout.order11:
+    class: Drupal\checkout\EventSubscriber\CheckoutMessage
+    arguments: ['@messenger', '@string_translation']
+    tags:
+      - { name: event_subscriber }
