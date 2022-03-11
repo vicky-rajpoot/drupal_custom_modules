@@ -76,25 +76,39 @@ class OrderCompleteSubscriber implements EventSubscriberInterface {
           $gids[] = $group['target_id'];
         }
       }
+      $gid = 1;
       // $group->addMember($user, ['group_roles' => ['podrazdelenie-admin']]);
       /** @var \Drupal\user\Entity\User $account */
-      $account = User::load($uid_value[0]['target_id']);
+      // $account = User::load($uid_value[0]['target_id']);
+      $account = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+      
       // dd($account);
       $group = \Drupal::entityTypeManager()->getStorage('group')->load(1);
       
         /** @var \Drupal\group\Entity\Group $group */
         // $values = ['group_roles' => 'content_editors' . '-' . 'book_users'];
         // $roles = array('book_users');
-        $values = ['group_roles' => ['book_users']];
-        $group->addMember($account,$values);
+        // $values = ['group_roles' => 'content_editors'.'-'.'book_users'];
+        // dd($values);
+        $group->addMember($account,['group_roles' => ['content_editors-books_users']]);
+        // og_group('node',$gid, $values);
         $group->save();
-        
+        // $account = $account->get('uid')->value;
+        // $account1=int($account);
+        // $membership = $account1->getGroupContent();
+        // $membership->group_roles[] = 'book_users';
+        // $membership->save();
 
       
     }
     
 }
 
+
+    
+/**
+ * Submit callback for user_register form.
+ */
 
 
 // $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
