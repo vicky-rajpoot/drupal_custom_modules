@@ -64,35 +64,51 @@ class OrderCompleteSubscriber implements EventSubscriberInterface {
     public function orderCompleteHandler(WorkflowTransitionEvent $event) {
       /** @var \Drupal\commerce_order\Entity\OrderInterface $order */
       $order = $event->getEntity();
-      $uid_value = $order->get('uid')->getValue();
-
-      $gids = [];
       foreach ($order->getItems() as $order_item) {
-        /** @var \Drupal\commerce_product\Entity\ProductVariation $product_variation */
-        $product_variation = $order_item->getPurchasedEntity();
-        $product = $product_variation->getProduct();
-        $group_value = $product->get('field_book')->getValue();
-        foreach ($group_value as $group) {
-          $gids[] = $group['target_id'];
-        }
+      $product_variation = $order_item->getPurchasedEntity();
+      $title = $product_variation->id();
+      
       }
-      $gid = 1;
+      if($title==2){
+        $uid_value = $order->get('uid')->getValue();
+         $gid = 1;
+         $account = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+         $group = \Drupal::entityTypeManager()->getStorage('group')->load(1);
+         $group->addMember($account,['group_roles' => ['content_editors-books_users']]);
+         $group->save();
+        // og_group('node',$gid, $values);
+      }
+      
+      // $entity_manager = \Drupal::entityTypeManager();
+      // $products = $entity_manager->getStorage('commerce_product')->load($uid_value);
+      // $products->get('title')->gatValue();
+      // dd($products);
+      // $gids = [];
+      // foreach ($order->getItems() as $order_item) {
+      //   /** @var \Drupal\commerce_product\Entity\ProductVariation $product_variation */
+      //   $product_variation = $order_item->getPurchasedEntity();
+      //   $product = $product_variation->getProduct();
+      //   $group_value = $product->get('field_book')->getValue();
+      //   foreach ($group_value as $group) {
+      //     $gids[] = $group['target_id'];
+      //   }
+      // }
+     
       // $group->addMember($user, ['group_roles' => ['podrazdelenie-admin']]);
       /** @var \Drupal\user\Entity\User $account */
       // $account = User::load($uid_value[0]['target_id']);
-      $account = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+      
       
       // dd($account);
-      $group = \Drupal::entityTypeManager()->getStorage('group')->load(1);
+      
       
         /** @var \Drupal\group\Entity\Group $group */
         // $values = ['group_roles' => 'content_editors' . '-' . 'book_users'];
         // $roles = array('book_users');
         // $values = ['group_roles' => 'content_editors'.'-'.'book_users'];
         // dd($values);
-        $group->addMember($account,['group_roles' => ['content_editors-books_users']]);
-        // og_group('node',$gid, $values);
-        $group->save();
+        
+        
         // $account = $account->get('uid')->value;
         // $account1=int($account);
         // $membership = $account1->getGroupContent();
